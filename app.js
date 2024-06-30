@@ -19,19 +19,20 @@ const LocalStrategy= require ("passport-local");
 const User= require("./models/user.js");
 
 // Connect to MongoDB
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-
-async function main() {
-  await mongoose.connect(MONGO_URL);
-}
+//  const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = process.env.MONGO_URL;
 
 main()
   .then(() => {
-    console.log("Connected to DB");
+    console.log("connected to DB");
   })
   .catch((err) => {
-    console.error("Database connection error:", err);
+    console.log(err);
   });
+
+async function main() {
+  await mongoose.connect(MONGO_URL);
+} 
 
 
 
@@ -41,6 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
+
 
 const sessionOptions = {
   secret: process.env.SECRET,
@@ -70,7 +72,7 @@ const sessionOptions = {
 
  passport.serializeUser(User.serializeUser());
  passport.deserializeUser(User.deserializeUser());
- 
+
  app.use((req, res, next) => {
   console.log('Current User:', req.user); // Debugging line
   res.locals.success = req.flash('success');
