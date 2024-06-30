@@ -70,13 +70,15 @@ const sessionOptions = {
 
  passport.serializeUser(User.serializeUser());
  passport.deserializeUser(User.deserializeUser());
-
+ 
  app.use((req, res, next) => {
+  console.log('Current User:', req.user); // Debugging line
   res.locals.success = req.flash('success');
-  res.locals.error=req.flash("error");
-  res.locals.currUser= req.user;
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
   next();
 });
+
 
 // app.get("/demouser",async (req,res)=>{
 //   let fakeUser= new User({
