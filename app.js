@@ -68,14 +68,14 @@ const sessionOptions = {
   res.locals.currUser = req.user;
   next();
 });
-// app.get("/demouser",async (req,res)=>{
-//   let fakeUser= new User({
-//     email:"honey9122836921@getMaxListeners.com",
-//     username:"sinha-honey"
-//   });
-//     let registeredUser=await User.register(fakeUser,"helloworld");
-//     res.send(registeredUser)
-// })
+app.get("/demouser",async (req,res)=>{
+  let fakeUser= new User({
+    email:"honey9122836921@getMaxListeners.com",
+    username:"sinha-honey"
+  });
+    let registeredUser=await User.register(fakeUser,"helloworld");
+    res.send(registeredUser)
+})
 app.use("/listings", listingRouter);
 app.use("/listings/:id/review", reviewRouter);
 app.use("/",userRouter)
